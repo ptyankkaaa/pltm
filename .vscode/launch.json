@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/studies/LangProg/shared_folder/pltm/lab1/task5",
-      "program": "c:/studies/LangProg/shared_folder/pltm/lab1/task5/build/Debug/outDebug",
+      "cwd": "c:/studies/LangProg/shared_folder/pltm/lab1/task1",
+      "program": "c:/studies/LangProg/shared_folder/pltm/lab1/task1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
