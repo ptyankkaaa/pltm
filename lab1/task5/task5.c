@@ -1,9 +1,6 @@
 #include<stdio.h>
 
-/// @brief 
-/// @param argc 
-/// @param argv 
-/// @return 
+
 int main(int argc, char *argv[]){
    if(argc < 2){
       printf("Error, try again\n");
