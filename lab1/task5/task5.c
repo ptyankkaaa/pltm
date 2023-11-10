@@ -19,6 +19,11 @@ int main(int argc, char *argv[]){
    char ch;
    while ((ch = fgetc(file)) != EOF){
       putchar(ch);
+<<<<<<< HEAD
       
    }fclose(file);
+=======
+     
+   } fclose(file);
+>>>>>>> 652f1542a95b91c4a6e3bda5fd0dffd02832895d
 }
