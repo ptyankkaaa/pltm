@@ -8,6 +8,7 @@ int main(){
     scanf("%d", &size);
 
     float array[size];
+    printf("%d\n", RAND_MAX);
     srand(time(NULL));
     for (int i = 0; i < size; i++){
         array[i] = (float) rand() / RAND_MAX * (1 - 0) + 0; //Если разделить случайное число, преобразованное к вещественному типу,

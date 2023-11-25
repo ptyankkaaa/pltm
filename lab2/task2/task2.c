@@ -22,7 +22,7 @@ int main(){
     }
 
     for (int i = 0; i < size; i++){
-        fprintf(output_file, "%d", array[size-i-1]);
+        fprintf(output_file, "%d\t", array[size-i-1]);
     }
     
     fclose(output_file);
