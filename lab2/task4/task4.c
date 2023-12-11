@@ -3,23 +3,12 @@
 #include <time.h>
 
 
-void ShellSort(int n, int mass[])
-{
-    int i, j, step;
-    int tmp;
-    for (step = n / 2; step > 0; step /= 2)
-        for (i = step; i < n; i++)
-        {
-            tmp = mass[i];
-            for (j = i; j >= step; j -= step)
-            {
-                if (tmp < mass[j - step])
-                    mass[j] = mass[j - step];
-                else
-                    break;
-            }
-            mass[j] = tmp;
-        }
+void shellSort(float* array, size_t size) {
+	for (size_t d = size / 2; d > 0; d /= 2)
+		for (size_t i = d; i < size; i++)
+			for (int j = i - d; j >= 0 && arr[j] > arr[j + d]; j -= d)
+				swap(&array[j], &array[j + d]);
+    for(int i; i<size; i++){printf("%f", array[])}
 }
 
 
@@ -51,11 +40,18 @@ int main(){
         printf("Error, can't create file\n");
         return 1;
     }
+    // float sortarray=[size];
+    // shellSort(array, size);
 
-    for (int i = 0; i < size; i++){
-        fprintf(output_file, "%f", quickSort(array, 0, size-1));
-    }
-    fclose(output_file);
-    return 0;
+    // for (int i = 0; i < size; i++){
+    //     sortarray[i] == 
+    // }
+
+    // for (int i = 0; i < size; i++){
+    //     fprintf(output_file, "%f", sortarray);
+    // }
+    
+    // fclose(output_file);
+    // return 0;
 
 }
