@@ -1,0 +1,33 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+struct book{
+    char title[15];
+    char author[15];
+    int value;
+};
+int main(){
+    printf("how many books u want to add?")
+    int a;
+    scanf("%d", &a);
+    struct book library[a];
+    int i;
+    for (i = 0; i < 3; i++)
+    {
+        printf("Enter the name %d book:", i + 1);
+        gets_s(library[i].title);
+        printf("Enter the author %d book", i+1);
+        gets_s(library[i].author);
+        printf("Enter the price %d book", i+1);
+        gets_s(library[i].value);
+        getchar();
+    }
+
+for (i = 0; i < 3; i++){
+    printf("\n %d. %s ", i+1, library[i].author);
+    printf("%s %d", library[i].titile, library[i].value);
+}
+getchar();
+return 0;
+}
