@@ -1,14 +1,14 @@
 {
   "configurations": [
     {
-      "name": "windows-gcc-x64",
+      "name": "windows-gcc-x86",
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "compilerPath": "c:/users/ptyan/gcc/bin/gcc.exe",
+      "compilerPath": "c:/users/narka/gcc/bin/gcc.exe",
       "cStandard": "${default}",
       "cppStandard": "${default}",
-      "intelliSenseMode": "windows-gcc-x64",
+      "intelliSenseMode": "windows-gcc-x86",
       "compilerArgs": [
         ""
       ]
