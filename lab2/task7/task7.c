@@ -1,111 +1,123 @@
-#include <iostream>
-#include <fstream>
-#include <stack>
-#include <string>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
 
-const int MAX_SIZE = 100; // максимальный размер стека
-
-struct Node {
-    int value;
-    Node* prev;
+struct Stack {
+    int maxSize;
+    int top;
+    double *items;
 };
 
-class Stack {
-private:
-    Node* top; // указатель на вершину стека
-    int size; // текущий размер стека
-public:
-    Stack() {
-        top = nullptr;
-        size = 0;
-    }
+struct Stack *newStack(int capacity) {
+    struct Stack *ptr = (struct Stack*) malloc(sizeof(struct Stack));
 
-    ~Stack() {
-        while (!isEmpty()) {
-            pop();
-        }
-    }
+    ptr->maxSize = capacity;
+    ptr->top = -1;
+    ptr->items = (double*) malloc(sizeof(int) *capacity);
+    
+    return ptr;
+}
 
-    bool isEmpty() {
-        return top == nullptr;
-    }
+int isEmpty(struct Stack *ptr) {
+    return ptr->top == -1;
+}
 
-    bool isFull() {
-        return size == MAX_SIZE;
-    }
+int isFull(struct Stack *ptr) {
+    return ptr->top == ptr->maxSize - 1;
+}
 
-    void push(int value) {
-        if (isFull()) {
-            cout << "Стек переполнен" << endl;
-            return;
-        }
-        Node* newNode = new Node;
-        newNode->value = value;
-        newNode->prev = top;
-        top = newNode;
-        size++;
-    }
-
-    int pop() {
-        if (isEmpty()) {
-            return -1;
-        }
-        Node* temp = top;
-        int value = temp->value;
-        top = top->prev;
-        delete temp;
-        size--;
-        return value;
-    }
-
-    int peek() {
-        if (isEmpty()) {
-            return -1;
-        }
-        return top->value;
-    }
-};
-
-int main() {
-    int result = 0;
-    Stack s;
-
-    ifstream inputFile("input.txt");
-    if (!inputFile) {
-        cout << "Failed to open input file." << endl;
+int push(struct Stack *ptr, double x) {
+    if (isFull(ptr)) {
+        printf("Overflow\n");
         return 1;
     }
 
-    string expression;
-    getline(inputFile, expression);
-    inputFile.close();
+    ptr->items[++ptr->top] = x;
+}
 
-    for (char& c : expression) {
-        if (isdigit(c)) {
-            s.push(int(c) - 48);
-        } else if (c == '+' || c == '-' || c == '*' || c == '/') {
-            int operand2 = s.peek();
-            s.pop();
-            int operand1 = s.peek();
-            s.pop();
-
-            switch (c) {
-                case '+':
-                    s.push(operand1 + operand2);
-                    break;
-                case '-':
-                    s.push(operand1 - operand2);
-                    break;
-                case '*':
-                    s.push(operand1 * operand2);
-                    break;
-                case '/':
-                    s.push(operand1 / operand2);
-                    break;
-            }
-        }
+int pop(struct Stack *ptr) {
+    if(isEmpty(ptr)) {
+        printf("Underflow\n");
+        return 1;
     }
-    cout << "Получилось: " << s.peek() << endl;
+
+    return ptr->items[ptr->top--];
+}
+
+int peek(struct Stack *ptr) {
+     if(!isEmpty(ptr)) {
+        return ptr->items[ptr->top];
+    } else {
+        return 1;
+    }
+}
+
+double calculate(char *str, int count) {
+    double result = 0;
+    struct Stack *nums = newStack(count);
+
+    for (int i = 0; i < strlen(str); i++) {
+    
+        if(isdigit(str[i])) {
+            
+            int indexStart = i;
+            while (str[i] != ' ' || str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') {
+                i++;
+                if (i == count) break;
+            }
+            int indexEnd = i;
+
+            char num[indexEnd-indexStart];
+            int indexNum = 0;
+            for (int j = indexStart; j < indexEnd; j++) {
+                num[indexNum] = str[j];
+                indexNum++;
+            }
+            push(nums, atof(num));
+            i--;
+        
+        } else if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') {
+            double a = pop(nums);
+            double b = pop(nums);
+
+            switch (str[i]) {
+                case '+': result = b + a; break;
+                case '-': result = b - a; break;
+                case '*': result = b * a; break;
+                case '/': result = b / a; break;
+            }
+            push(nums, result);
+        }
+
+    }
+    return result;
+}
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+		printf("Error, try again\n");
+		return 1;
+	}
+
+    FILE *inputFile;
+
+    inputFile = fopen(argv[1], "r");
+    if (inputFile == NULL) {
+        printf("Can`t open file\n");
+        return 1;
+    }
+
+    char str[100];
+    fgets(str, sizeof(str), inputFile);
+
+    int count = 0;
+    for (int i = 0; str[i] != '\n' && str[i] != '\0'; i++) {
+        count++;
+    }
+
+    fclose(inputFile);
+
+    printf("Answer = %f\n", calculate(str, count));
     return 0;
 }

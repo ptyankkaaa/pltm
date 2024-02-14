@@ -1,87 +1,80 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-const int MAX_SIZE = 10; // максимальный размер стека
-
-struct Node {
-    int value;
-    Node* prev;
+struct Stack {
+    int maxSize;
+    int top;
+    int *items;
 };
 
-class Stack {
-private:
-    Node* top; // указатель на вершину стека
-    int size; // текущий размер стека
-public:
-    Stack() {
-        top = nullptr;
-        size = 0;
+struct Stack *newStack(int capacity) {
+    struct Stack *ptr = (struct Stack*) malloc(sizeof(struct Stack));
+
+    ptr->maxSize = capacity;
+    ptr->top = -1;
+    ptr->items = (int*) malloc(sizeof(int) *capacity);
+    
+    return ptr;
+}
+
+int isEmpty(struct Stack *ptr) {
+    return ptr->top == -1;
+}
+
+int isFull(struct Stack *ptr) {
+    return ptr->top == ptr->maxSize - 1;
+}
+
+int push(struct Stack *ptr, int x) {
+    if (isFull(ptr)) {
+        printf("Overflow\n");
+        return 1;
     }
 
-    ~Stack() {
-        while (!isEmpty()) {
-            pop();
-        }
+    ptr->items[++ptr->top] = x;
+}
+
+int pop(struct Stack *ptr) {
+    if(isEmpty(ptr)) {
+        printf("Underflow\n");
+        return 1;
     }
 
-    bool isEmpty() {
-        return top == nullptr;
+    return ptr->items[ptr->top--];
+}
+
+int peek(struct Stack *ptr) {
+     if(!isEmpty(ptr)) {
+        return ptr->items[ptr->top];
+    } else {
+        return 1;
     }
+}
 
-    bool isFull() {
-        return size == MAX_SIZE;
+int main () {
+    struct Stack *stack = newStack(10);
+    push(stack, 1);
+    push(stack, 2);
+    push(stack, 3);
+
+    printf("%d\n", peek(stack));
+    pop(stack);
+
+    
+    printf("%d\n", peek(stack));
+    pop(stack);
+    
+    printf("%d\n", peek(stack));
+    pop(stack);
+
+    push(stack, 1);
+
+    if (isEmpty(stack)) {
+        printf("The stack is empty");
     }
-
-    void push(int value) {
-        if (isFull()) {
-            cout << "Стек переполнен" << endl;
-            return;
-        }
-        Node* newNode = new Node;
-        newNode->value = value;
-        newNode->prev = top;
-        top = newNode;
-        size++;
+    else {
+        printf("The stack is not empty");
     }
-
-    int pop() {
-        if (isEmpty()) {
-            cout << "Стек пуст" << endl;
-            return -1;
-        }
-        Node* temp = top;
-        int value = temp->value;
-        top = top->prev;
-        delete temp;
-        size--;
-        return value;
-    }
-
-    int peek() {
-        if (isEmpty()) {
-            cout << "Стек пустой" << endl;
-            return -1;
-        }
-        return top->value;
-    }
-};
-
-int main() {
-    Stack s;
-
-    s.push(10);
-    s.push(25);
-    s.push(0);
-    cout << "Верхний элемент: " << s.peek() << endl;
-
-    cout << s.pop() << " Извлечён из стека" << endl;
-    cout << s.pop() << " Извлечён из стека" << endl;
-
-    cout << "Верхний элемент: " << s.peek() << endl;
-
-    s.push(40);
-
-    cout << "Верхний элемент: " << s.peek() << endl;
 
     return 0;
 }
