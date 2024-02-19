@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/narka/Documents/GitHub/pltm/lab2/task5",
-      "program": "c:/Users/narka/Documents/GitHub/pltm/lab2/task5/build/Debug/outDebug",
+      "cwd": "c:/Users/narka/Documents/GitHub/pltm/lab3/task2",
+      "program": "c:/Users/narka/Documents/GitHub/pltm/lab3/task2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
